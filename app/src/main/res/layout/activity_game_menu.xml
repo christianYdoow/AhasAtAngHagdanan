@@ -5,28 +5,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameMenuActivity">
+    tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/game_menu_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game Menu !"
+        app:layout_constraintBottom_toTopOf="@id/single_player_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="20sp"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        />
 
-    <com.google.android.material.textfield.TextInputLayout
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/single_player_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/username"
-        app:endIconMode="clear_text"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:padding="5dp"
-        android:layout_margin="200dp">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:text="SinglePlayer"
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/usernameText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Username"
-            android:maxLines="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/multi_player_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/single_player_button"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginTop="10dp"
+        android:text="Multiplayer"
 
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/setting_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/multi_player_button"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginTop="10dp"
+        android:text="setting"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
