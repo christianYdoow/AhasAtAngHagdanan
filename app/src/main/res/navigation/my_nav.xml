@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/firstFragment"
         android:name="ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.FirstFragment"
-        android:label="Instruction"
+        android:label="Instructions"
         tools:layout="@layout/fragment_first" />
     <fragment
         android:id="@+id/secondFragment"
         android:name="ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.SecondFragment"
-        android:label="Leaderboard"
+        android:label="Play"
         tools:layout="@layout/fragment_second" />
     <fragment
         android:id="@+id/thirdFragment"
         android:name="ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.ThirdFragment"
-        android:label="User Settings"
+        android:label="Leaderboard"
         tools:layout="@layout/fragment_third" />
 </navigation>
