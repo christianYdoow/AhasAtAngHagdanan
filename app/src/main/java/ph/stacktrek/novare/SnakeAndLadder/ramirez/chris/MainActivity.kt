@@ -1,25 +1,39 @@
 package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding=ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root )
+        changeFragment(FirstFragment())
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val navController = findNavController(R.id.fragment)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.firstFragment, R.id.secondFragment, R.id.thirdFragment))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.bottomNavigationView.setOnItemSelectedListener{
+            when(it.itemId){
+                R.id.instruction -> changeFragment (FirstFragment())
+                R.id.play -> changeFragment(SecondFragment())
+                R.id.leaderboard -> changeFragment(ThirdFragment())
+                else->{
 
-        bottomNavigationView.setupWithNavController(navController)
+                }
+            }
+            true
+        }
+    }
+
+
+    private fun changeFragment(fragment: Fragment){
+        val fragmentManager =supportFragmentManager
+        val fragmentTransaction =fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout,fragment)
+        fragmentTransaction.commit()
     }
 
     override fun onBackPressed() {

@@ -29,7 +29,7 @@ class SplashScreenActivity : AppCompatActivity() {
             while (currentProgress < totalProgress) {
                 currentProgress++
                 updateProgress(currentProgress)
-                Thread.sleep(100) // delay to simulate progress updates
+                Thread.sleep(50) // delay to simulate progress updates
             }
             // When progress reaches 100%, move on to game-menu
             startActivity(Intent(this, GameMenuActivity::class.java))
