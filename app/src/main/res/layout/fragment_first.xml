@@ -1,23 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FirstFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="50dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="49dp"
+        tools:layout_editor_absoluteY="49dp"
+        >
+
+        <TextView
+            android:id="@+id/Game_instruction_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="Game instruction"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#618d57"
+            android:textSize="28dp"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/instruction_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="Each player starts at square one and tries to reach the end of the board first."
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#618d57"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/instruction_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="Players take turns rolling a die to determine how many squares
+            they can move."
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#618d57"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
 
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Fragment"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/instruction_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="If a player lands on a ladder, they can climb up to the square at the top of the ladder. If a player lands on a snake, they must slide down to the square at the bottom of the snake."
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#618d57"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/instruction_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="Possible outcomes by throwing a dice are 1,2,3,4,5,6."
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#618d57"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/instruction_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="The first player to reach the end of the board or 100 tile wins the game."
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#618d57"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/instruction_six"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="The game can be played with two or more players"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#618d57"
+            android:textSize="18dp"
+            android:textAlignment="center"/>
+
+
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

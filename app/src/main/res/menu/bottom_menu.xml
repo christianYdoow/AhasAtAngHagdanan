@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/firstFragment"
-        android:icon="@drawable/instruction"
-        android:title="Instructions" />
+        android:id="@+id/instruction"
+        android:icon="@drawable/baseline_book_24"
+        android:title="Instruction" />
     <item
-        android:id="@+id/secondFragment"
-        android:icon="@drawable/play"
+        android:id="@+id/play"
+        android:icon="@drawable/baseline_play_arrow_24"
         android:title="Play" />
     <item
-        android:id="@+id/thirdFragment"
-        android:icon="@drawable/leaderboard"
-        android:title="Leaderboard" />
+        android:id="@+id/leaderboard"
+        android:icon="@drawable/baseline_leaderboard_24"
+        android:title="Leaderboard"
+        />
 </menu>
