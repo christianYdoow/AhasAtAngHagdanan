@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val goToGameMenuActivity = Intent(applicationContext,
-            GameMenuActivity::class.java)
-        startActivity(goToGameMenuActivity)
+        val goToGame = Intent(applicationContext,
+            Game::class.java)
+        startActivity(goToGame)
         finish()
     }
 
