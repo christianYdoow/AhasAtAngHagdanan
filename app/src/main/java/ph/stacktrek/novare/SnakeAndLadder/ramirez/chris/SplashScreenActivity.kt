@@ -1,11 +1,10 @@
 package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ProgressBar
 import android.widget.TextView
-import kotlinx.coroutines.*
+import androidx.appcompat.app.AppCompatActivity
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {

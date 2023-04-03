@@ -1,5 +1,6 @@
 package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.LinearLayout
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.dao.PlayerDAO
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.databinding.FragmentSecondBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,7 +28,8 @@ class SecondFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var binding: FragmentSecondBinding
+    private lateinit var playerDAO: PlayerDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,26 +37,92 @@ class SecondFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        binding = FragmentSecondBinding.inflate(inflater, container, false)
+        setupPlayerNumberSelection()
+
         // Inflate the layout for this fragment
 
-        val view= inflater.inflate(R.layout.fragment_second, container, false)
-
-        val button = view.findViewById<Button>(R.id.multi_player_button)
-        button.setOnClickListener {
+        binding.multiPlayerButton.setOnClickListener {
+            val playerNames = ArrayList<String>()
+            if (binding.checkboxOne.isChecked) {
+                playerNames.add(binding.player1Name.text.toString())
+                playerNames.add(binding.player2Name.text.toString())
+            } else if (binding.checkboxTwo.isChecked) {
+                playerNames.add(binding.player1Name.text.toString())
+                playerNames.add(binding.player2Name.text.toString())
+                playerNames.add(binding.player3Name.text.toString())
+            } else if (binding.checkboxThree.isChecked) {
+                playerNames.add(binding.player1Name.text.toString())
+                playerNames.add(binding.player2Name.text.toString())
+                playerNames.add(binding.player3Name.text.toString())
+                playerNames.add(binding.player4Name.text.toString())
+            }
+            // Save the player names to SharedPreferences
+            val sharedPreferences = activity?.getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
+            val editor = sharedPreferences?.edit()
+            editor?.putStringSet("playerNames", playerNames.toSet())
+            editor?.apply()
+            // Start the Game activity
             val intent = Intent(activity, Game::class.java)
             startActivity(intent)
         }
 
-        return view
 
+        return binding.root
+    }
+
+    private fun setupPlayerNumberSelection() {
+        binding.checkboxOne.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.checkboxTwo.isChecked = false
+                binding.checkboxThree.isChecked = false
+                binding.player1Name.visibility = View.VISIBLE
+                binding.player2Name.visibility = View.VISIBLE
+                binding.player3Name.visibility = View.GONE
+                binding.player4Name.visibility = View.GONE
+            } else {
+                binding.player1Name.visibility = View.GONE
+                binding.player2Name.visibility = View.GONE
+            }
+        }
+
+        binding.checkboxTwo.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.checkboxOne.isChecked = false
+                binding.checkboxThree.isChecked = false
+                binding.player1Name.visibility = View.VISIBLE
+                binding.player2Name.visibility = View.VISIBLE
+                binding.player3Name.visibility = View.VISIBLE
+                binding.player4Name.visibility = View.GONE
+            } else {
+                binding.player1Name.visibility = View.GONE
+                binding.player2Name.visibility = View.GONE
+                binding.player3Name.visibility = View.GONE
+            }
+        }
+
+        binding.checkboxThree.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.checkboxOne.isChecked = false
+                binding.checkboxTwo.isChecked = false
+                binding.player1Name.visibility = View.VISIBLE
+                binding.player2Name.visibility = View.VISIBLE
+                binding.player3Name.visibility = View.VISIBLE
+                binding.player4Name.visibility = View.VISIBLE
+            } else {
+                binding.player1Name.visibility = View.GONE
+                binding.player2Name.visibility = View.GONE
+                binding.player3Name.visibility = View.GONE
+                binding.player4Name.visibility = View.GONE
+            }
+        }
     }
 
 
