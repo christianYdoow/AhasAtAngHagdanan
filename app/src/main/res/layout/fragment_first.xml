@@ -22,7 +22,7 @@
             android:layout_weight="0.14"
             android:text="Game instruction"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#618d57"
+            android:textColor="@color/black"
             android:textSize="28dp"
             android:textAllCaps="true"
             android:textStyle="bold"
