@@ -2,6 +2,9 @@ package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.databinding.ActivityMainBinding
@@ -36,13 +39,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val goToGame = Intent(applicationContext,
-            Game::class.java)
-        startActivity(goToGame)
-        finish()
-    }
+
 
 
 

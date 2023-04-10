@@ -46,36 +46,64 @@ class SecondFragment : Fragment() {
 
         binding = FragmentSecondBinding.inflate(inflater, container, false)
         setupPlayerNumberSelection()
+        savePlayers()
 
-        // Inflate the layout for this fragment
-
+        return binding.root
+    }
+    private fun savePlayers(){
         binding.multiPlayerButton.setOnClickListener {
             val playerNames = ArrayList<String>()
+            val playerColors = ArrayList<String>()
+            val playerPositions = ArrayList<Int>()
+
             if (binding.checkboxOne.isChecked) {
                 playerNames.add(binding.player1Name.text.toString())
+                playerColors.add("RED")
+                playerPositions.add(1)
                 playerNames.add(binding.player2Name.text.toString())
+                playerColors.add("BLUE")
+                playerPositions.add(1)
             } else if (binding.checkboxTwo.isChecked) {
                 playerNames.add(binding.player1Name.text.toString())
+                playerColors.add("RED")
+                playerPositions.add(1)
                 playerNames.add(binding.player2Name.text.toString())
+                playerColors.add("BLUE")
+                playerPositions.add(1)
                 playerNames.add(binding.player3Name.text.toString())
+                playerColors.add("GREEN")
+                playerPositions.add(1)
             } else if (binding.checkboxThree.isChecked) {
                 playerNames.add(binding.player1Name.text.toString())
+                playerColors.add("RED")
+                playerPositions.add(1)
                 playerNames.add(binding.player2Name.text.toString())
+                playerColors.add("BLUE")
+                playerPositions.add(1)
                 playerNames.add(binding.player3Name.text.toString())
+                playerColors.add("GREEN")
+                playerPositions.add(1)
                 playerNames.add(binding.player4Name.text.toString())
+                playerColors.add("YELLOW")
+                playerPositions.add(1)
             }
-            // Save the player names to SharedPreferences
+
             val sharedPreferences = activity?.getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
             val editor = sharedPreferences?.edit()
-            editor?.putStringSet("playerNames", playerNames.toSet())
+            editor?.putInt("numPlayers", playerNames.size)
+            for (i in 0 until playerNames.size) {
+                editor?.putString("playerName$i", playerNames[i])
+                editor?.putString("playerColor$i", playerColors[i])
+                editor?.putInt("playerPosition$i", playerPositions[i])
+            }
             editor?.apply()
             // Start the Game activity
             val intent = Intent(activity, Game::class.java)
+            val bundle = Bundle()
+            bundle.putStringArrayList("playerNames", playerNames)
+            intent.putExtras(bundle)
             startActivity(intent)
         }
-
-
-        return binding.root
     }
 
     private fun setupPlayerNumberSelection() {

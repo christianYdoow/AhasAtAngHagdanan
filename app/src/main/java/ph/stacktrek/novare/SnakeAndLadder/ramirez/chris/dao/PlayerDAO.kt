@@ -1,6 +1,7 @@
 package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.dao
 
-import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.Player
+
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.model.Player
 
 interface PlayerDAO {
     fun addPlayer(player:Player)
