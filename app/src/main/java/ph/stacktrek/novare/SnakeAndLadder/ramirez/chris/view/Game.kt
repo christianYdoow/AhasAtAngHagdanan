@@ -11,6 +11,7 @@ import android.os.Looper
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
@@ -40,6 +41,9 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
     private var round = 1
 
     var currentPlayerIndex = 0
+
+
+    var rollResult = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,19 +97,17 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
     @SuppressLint("SetTextI18n")
     fun startGame(players:MutableList<Player>){
         val roundTextView =binding.round
-        var  rollButton=binding.dice
-        val diceImage=binding.diceImage
-
+        val rollButton=binding.dice
         roundTextView.text = "Round $round"
-
+        val diceImage=binding.diceImage
         rollButton.setOnClickListener{
-            var currentPlayer = players[currentPlayerIndex]
-            println(currentPlayer.name)
+            val currentPlayer = players[currentPlayerIndex]
             if(currentPlayer.currentPosition == winTile){
                 boardLayout.gameOver()
                 boardLayout.winner(currentPlayer)
+                reset(currentPlayer)
             }else{
-                val rollResult = boardLayout.roll()
+                rollResult = boardLayout.roll()
                 val drawableResource =when (rollResult){
                     1 -> R.drawable.dice_one
                     2 -> R.drawable.dice_two
@@ -117,13 +119,12 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
                 diceImage.setImageResource(drawableResource)
 
                 currentPlayer.currentPosition +=rollResult
-                println("${currentPlayer.name} rolled a $rollResult  you are now in ${currentPlayer.currentPosition} ")
+                currentPlayer.currentPosition = boardLayout.movePlayerIfOnLadder(currentPlayer.currentPosition, boardLayout.ladders,applicationContext,currentPlayer)
+                currentPlayer.currentPosition = boardLayout.movePlayerIfOnSnake(currentPlayer.currentPosition, boardLayout.snakes,applicationContext,currentPlayer)
+
+                boardLayout.invalidate()
 
 
-                boardLayout.drawSnakeAndLadderBoard(canvas = boardCanvas,players=players)
-
-
-                checkIfWin(currentPlayer)
             }
             currentPlayerIndex = (currentPlayerIndex + 1) % players.size
             if(currentPlayerIndex == 0){
@@ -135,23 +136,28 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
 
                 },2000)
 
-
+            }
+            if (currentPlayer.currentPosition >= winTile){
+                println("${currentPlayer.name} is the winner congratulations")
+                reset(currentPlayer)
+            }else{
+                println("${currentPlayer.name} your position ${currentPlayer.currentPosition}")
             }
 
         }
 
     }
-    fun checkIfWin(player: Player) {
-        if (player.currentPosition > 100) {
-            player.currentPosition = 100
-        } else if (player.currentPosition == 100) {
-            boardLayout.gameOver()
-            println("${player.name} is the winner congratulations")
-        }
-    }
 
-    fun roundCount():Int{
-        return round
+    fun reset(player: Player){
+        showNotificationWinner(player)
+        round=1
+        currentPlayerIndex=0
+        for (player in players){
+            player.currentPosition=1
+        }
+        boardLayout.invalidate()
+        hideSystemUI()
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -176,21 +182,45 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
                 playerLayout.setTextColor(ContextCompat.getColor(this, R.color.white))
             }
         }
-//    fun showNotificationDialogue() {
-//        return this.let{
-//            val builder = AlertDialog.Builder(it)
-////            builder.setTitle("Title of dialog")
-//            builder.setMessage("${viewModel.currentPlayer} and roll ${viewModel.rollDice() }")
-//            builder.setPositiveButton("OK") { dialog, which ->
-//                // Perform action when OK button is clicked
-//            }
-//
-//            val dialog = builder.create()
-//            dialog.show()
-//        }
-//
-
     }
+
+    fun showNotificationWinner(player: Player) {
+        return this.let{
+            val builder = AlertDialog.Builder(it)
+//            builder.setTitle("Title of dialog")
+            builder.setMessage("${player.name} you winn")
+            builder.setPositiveButton("OK") { dialog, which ->
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+    fun showNotificationIsOnSnake(){
+        return this.let{
+            val builder = AlertDialog.Builder(it)
+//            builder.setTitle("Title of dialog")
+            builder.setMessage("Oh no!... ${player.name} you step on snake")
+            builder.setPositiveButton("OK") { dialog, which ->
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+    fun showNotificationIsOnLadder(){
+        return this.let{
+            val builder = AlertDialog.Builder(it)
+//            builder.setTitle("Title of dialog")
+            builder.setMessage("Yehheey yes!... ${player.name} you step on ladder")
+            builder.setPositiveButton("OK") { dialog, which ->
+            }
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+
+
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, binding.root).let { controller ->
