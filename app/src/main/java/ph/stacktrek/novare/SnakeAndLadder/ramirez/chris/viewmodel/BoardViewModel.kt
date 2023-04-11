@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.R
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.model.*
-import kotlin.math.round
 import kotlin.random.Random
 
 class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attrs) {
@@ -86,8 +85,7 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
                     row * 10 + col + 1
                 }
                 drawSquareAt(canvas, row, col, ((row + col)%2 == 0))
-                drawLadderBottomAt(canvas,squareNumber,ladders)
-                drawSnakeAt(canvas,squareNumber,snakes)
+
 
                 for (player in players) {
                     if (player.currentPosition == squareNumber) {
@@ -97,7 +95,10 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
                 }
 
                 drawTextAt(canvas,row,col,squareNumber)
+                drawLadderBottomAt(canvas,squareNumber,ladders)
+                drawSnakeAt(canvas,squareNumber,snakes)
 //                print("Square at ($row, $col): number = $squareNumber ")
+
             }
             println()
         }
@@ -145,7 +146,7 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
             val row = (squareNumber - 1) / 10
             val col = if (row % 2 == 0) (squareNumber - 1) % 10 else 9 - (squareNumber - 1) % 10
 
-            val tunnel = ContextCompat.getDrawable(context, R.drawable.tunnel)
+            val ladder = ContextCompat.getDrawable(context, R.drawable.ladder)
             val canvasWidth = canvas?.width ?: 0
             val canvasHeight = canvas?.height ?: 0
             val imageSize = (cellSide / 0.8f).coerceAtMost(cellSide * 0.8f)
@@ -154,9 +155,9 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
             val right = left + imageSize
             val bottom = top + imageSize
             val rect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-            tunnel?.bounds = rect
+            ladder?.bounds = rect
             if (canvas != null) {
-                tunnel?.draw(canvas)
+                ladder?.draw(canvas)
             }
         }
     }
@@ -166,7 +167,7 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
             val row = (squareNumber - 1) / 10
             val col = if (row % 2 == 0) (squareNumber - 1) % 10 else 9 - (squareNumber - 1) % 10
 
-            val tunnel = ContextCompat.getDrawable(context, R.drawable.tunnel)
+            val ladder = ContextCompat.getDrawable(context, R.drawable.ladder)
             val canvasWidth = canvas?.width ?: 0
             val canvasHeight = canvas?.height ?: 0
             val imageSize = (cellSide / 0.8f).coerceAtMost(cellSide * 0.8f)
@@ -175,9 +176,9 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
             val right = left + imageSize
             val bottom = top + imageSize
             val rect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-            tunnel?.bounds = rect
+            ladder?.bounds = rect
             if (canvas != null) {
-                tunnel?.draw(canvas)
+                ladder?.draw(canvas)
             }
         }
     }
@@ -188,7 +189,7 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
             val row = (squareNumber - 1) / 10
             val col = if (row % 2 == 0) (squareNumber - 1) % 10 else 9 - (squareNumber - 1) % 10
 
-            val carnivora = ContextCompat.getDrawable(context, R.drawable.carnivora)
+            val ahas = ContextCompat.getDrawable(context, R.drawable.ahas)
             val canvasWidth = canvas?.width ?: 0
             val canvasHeight = canvas?.height ?: 0
             val imageSize = (cellSide / 0.8f).coerceAtMost(cellSide * 0.8f)
@@ -197,9 +198,9 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
             val right = left + imageSize
             val bottom = top + imageSize
             val rect = Rect(left.toInt(), top.toInt(), right.toInt(), bottom.toInt())
-            carnivora?.bounds = rect
+            ahas?.bounds = rect
             if (canvas != null) {
-                carnivora?.draw(canvas)
+                ahas?.draw(canvas)
             }
         }
     }
