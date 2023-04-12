@@ -3,7 +3,9 @@ package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.model
 import android.graphics.Color
 
 data class Player(
-    val name: String,
+    var name: String,
     val color: PlayerColor,
     var currentPosition: Int
-)
+){
+    lateinit var id: String
+}

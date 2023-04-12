@@ -244,8 +244,4 @@ class BoardViewModel(context: Context?, attrs: AttributeSet?): View(context,attr
     }
 
 
-    fun checkSnakeAndLadder(){
-
-    }
-
 }

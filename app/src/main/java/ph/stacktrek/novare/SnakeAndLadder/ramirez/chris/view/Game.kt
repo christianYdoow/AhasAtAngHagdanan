@@ -18,6 +18,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.adapter.PlayerListAdapter
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.dao.PlayerDAOSQLLiteImplementation
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.dao.PlayerListDao
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.databinding.ActivityGameBinding
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.model.Player
 import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.model.PlayerColor
@@ -31,19 +33,19 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
     private lateinit var boardLayout: BoardViewModel
     private lateinit var player: Player
 
-    //    private lateinit var viewModel: BoardViewModel
-    private lateinit var adapter: PlayerListAdapter
+
+
     private  var doubleBackToExitPressedOnce = false
     private var players = mutableListOf<Player>()
     private lateinit var sharedPreferences: SharedPreferences
 
     private var winTile=100
     private var round = 1
-
     var currentPlayerIndex = 0
-
-
     var rollResult = 0
+    private lateinit var adapter: PlayerListAdapter
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +65,8 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
         val playerNames = ArrayList<String>()
         val playerColors = ArrayList<String>()
         val playerPositions = ArrayList<Int>()
+
+
 
         for (i in 0 until numPlayers) {
             playerNames.add(sharedPreferences.getString("playerName$i", "")!!)
@@ -96,6 +100,8 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
 
     @SuppressLint("SetTextI18n")
     fun startGame(players:MutableList<Player>){
+        val playerWinner = ArrayList<PlayerListDao>()
+        adapter = PlayerListAdapter(playerWinner)
         val roundTextView =binding.round
         val rollButton=binding.dice
         roundTextView.text = "Round $round"
@@ -105,6 +111,7 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
             if(currentPlayer.currentPosition == winTile){
                 boardLayout.gameOver()
                 boardLayout.winner(currentPlayer)
+                saveWinner(currentPlayer.name)
                 reset(currentPlayer)
             }else{
                 rollResult = boardLayout.roll()
@@ -139,10 +146,14 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
             }
             if (currentPlayer.currentPosition >= winTile){
                 println("${currentPlayer.name} is the winner congratulations")
+                saveWinner(currentPlayer.name)
                 reset(currentPlayer)
+
             }else{
                 println("${currentPlayer.name} your position ${currentPlayer.currentPosition}")
             }
+
+
 
         }
 
@@ -158,6 +169,15 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
         boardLayout.invalidate()
         hideSystemUI()
 
+    }
+
+
+    fun saveWinner(playerWinnerName:String){
+        val playerListDao = PlayerListDao("")
+        playerListDao.name=playerWinnerName
+        val playerDAO = PlayerDAOSQLLiteImplementation(applicationContext)
+        playerDAO.addPlayer(playerListDao)
+        adapter.addPlayer(playerListDao)
     }
 
     @SuppressLint("SetTextI18n")
@@ -188,8 +208,9 @@ class Game : AppCompatActivity(), SurfaceHolder.Callback {
         return this.let{
             val builder = AlertDialog.Builder(it)
 //            builder.setTitle("Title of dialog")
-            builder.setMessage("${player.name} you winn")
+            builder.setMessage("${player.name} congratulation you win")
             builder.setPositiveButton("OK") { dialog, which ->
+
             }
             val dialog = builder.create()
             dialog.show()

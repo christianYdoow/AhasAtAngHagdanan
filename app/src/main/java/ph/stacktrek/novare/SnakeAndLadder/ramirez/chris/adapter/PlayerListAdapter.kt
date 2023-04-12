@@ -1,34 +1,48 @@
 package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.R
-import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.model.Player
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.dao.PlayerListDao
+import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.databinding.ListItemPlayerBinding
 
-class PlayerListAdapter(private val players:List<Player>):
-    RecyclerView.Adapter<PlayerListAdapter.ViewHolder>(){
 
-        class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-            val playerNameTextView:TextView = itemView.findViewById(R.id.playerNameTextView)
-            val playerPositionTextView : TextView = itemView.findViewById(R.id.playerPositionTextView)
-        }
+class PlayerListAdapter(
+                        private val playerListDaos:ArrayList<PlayerListDao>):
+                        RecyclerView.Adapter<PlayerListAdapter.ViewHolder>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_game,parent,false)
-        return ViewHolder(view)
-    }
+{
 
-    override fun getItemCount(): Int {
-        return players.size
+    fun addPlayer(playerListDao : PlayerListDao) {
+           playerListDaos.add(0,playerListDao)
+           notifyItemInserted(0)
+       }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): PlayerListAdapter.ViewHolder {
+        val playerBinding = ListItemPlayerBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(playerBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val player = players[position]
-        holder.playerNameTextView.text = player.name
-        holder.playerPositionTextView.text = "Position: ${player.currentPosition}"
+        holder.bindItems(playerListDaos[position])
     }
+
+
+    override fun getItemCount(): Int=playerListDaos.size
+
+    inner class ViewHolder(private val playerBinding: ListItemPlayerBinding ):
+            RecyclerView.ViewHolder(playerBinding.root){
+
+                fun bindItems(playerListDao: PlayerListDao){
+                    playerBinding.playerNameTextView.text=playerListDao.name
+                }
+            }
+
+
+
 }
