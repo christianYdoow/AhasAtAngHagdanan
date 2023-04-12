@@ -79,7 +79,15 @@ class PlayerDAOSQLLiteImplementation(var applicationContext : Context):PlayerDAO
     }
 
     override fun deletePlayer(playerListDao: PlayerListDao) {
-        TODO("Not yet implemented")
+        val databaseHandler = DatabaseHandler(applicationContext)
+        val db = databaseHandler.writableDatabase
+
+        val selection = "${DatabaseHandler.TABLE_PLAYER_ID} = ?"
+        val selectionArgs = arrayOf(playerListDao.id)
+
+        db.delete(DatabaseHandler.TABLE_PLAYER, selection, selectionArgs)
+
+        db.close()
     }
     override fun deleteAllPlayer(){
         val databaseHandler = DatabaseHandler(applicationContext)

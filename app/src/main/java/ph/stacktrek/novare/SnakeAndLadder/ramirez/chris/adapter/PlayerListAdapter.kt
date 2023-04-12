@@ -1,6 +1,5 @@
 package ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +8,8 @@ import ph.stacktrek.novare.SnakeAndLadder.ramirez.chris.databinding.ListItemPlay
 
 
 class PlayerListAdapter(
-                        private val playerListDaos:ArrayList<PlayerListDao>):
+                        private val playerListDaos: MutableList<PlayerListDao>
+):
                         RecyclerView.Adapter<PlayerListAdapter.ViewHolder>()
 
 {

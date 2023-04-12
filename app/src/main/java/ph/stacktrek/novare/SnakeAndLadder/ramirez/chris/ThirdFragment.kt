@@ -51,17 +51,15 @@ class ThirdFragment : Fragment() {
         // Inflate the layout for this fragment
         val max_playerWinner= 5
         playerDao = PlayerDAOSQLLiteImplementation(requireContext())
-        val playerList = playerDao.getPlayer()
+        var playerList = playerDao.getPlayer().asReversed().take(max_playerWinner).toMutableList()
 
-        playerListAdapter = PlayerListAdapter(playerList as ArrayList<PlayerListDao>)
+
+        playerListAdapter = PlayerListAdapter(playerList)
 
         rootView.findViewById<RecyclerView>(R.id.player_list_recyclerview).apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = playerListAdapter
-            if(playerList.size>max_playerWinner){
-                playerList.removeAt(0)
-                playerListAdapter.notifyItemRemoved(0)
-            }
+
         }
         return rootView
     }
