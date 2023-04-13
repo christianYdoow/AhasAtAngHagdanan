@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textSize="18sp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/playerPositionTextView"

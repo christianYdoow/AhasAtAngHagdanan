@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.14"
-            android:text="Players take turns rolling a die to determine how many squares
+            android:text="Players take turns rolling a dice to determine how many squares
             they can move."
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#618d57"
